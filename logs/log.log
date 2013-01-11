@@ -1,0 +1,10 @@
+INFO main com.Quartz.Watch.domain.connection.QuartzConnectServiceImpl - added listener quartz:instance=NON_CLUSTERED,name=startQuartz,type=QuartzScheduler
+INFO main com.Quartz.Watch.domain.connection.QuartzConnectServiceImpl - added listener quartz:instance=NON_CLUSTERED,name=startQuartz,type=QuartzScheduler
+INFO main com.Quartz.Watch.domain.connection.QuartzConnectServiceImpl - added listener quartz:instance=NON_CLUSTERED,name=startQuartz,type=QuartzScheduler
+INFO main com.Quartz.Watch.domain.connection.QuartzConnectServiceImpl - added listener quartz:instance=NON_CLUSTERED,name=startQuartz,type=QuartzScheduler
+INFO main com.Quartz.Watch.domain.connection.QuartzConnectServiceImpl - added listener quartz:instance=NON_CLUSTERED,name=startQuartz,type=QuartzScheduler
+INFO main com.Quartz.Watch.domain.connection.QuartzConnectServiceImpl - added listener quartz:instance=NON_CLUSTERED,name=startQuartz,type=QuartzScheduler
+INFO main com.Quartz.Watch.domain.connection.QuartzConnectServiceImpl - added listener quartz:instance=NON_CLUSTERED,name=startQuartz,type=QuartzScheduler
+INFO main com.Quartz.Watch.domain.connection.QuartzConnectServiceImpl - added listener quartz:instance=NON_CLUSTERED,name=startQuartz,type=QuartzScheduler
+INFO main com.Quartz.Watch.domain.connection.QuartzConnectServiceImpl - added listener quartz:instance=NON_CLUSTERED,name=startQuartz,type=QuartzScheduler
+INFO main com.Quartz.Watch.domain.connection.QuartzConnectServiceImpl - added listener quartz:instance=NON_CLUSTERED,name=startQuartz,type=QuartzScheduler

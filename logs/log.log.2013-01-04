@@ -1,0 +1,6 @@
+INFO HSQLDB Server @1f14ceb hsqldb.db.HSQLDB3C04BB2DB5.ENGINE - Checkpoint start
+INFO HSQLDB Server @1f14ceb hsqldb.db.HSQLDB3C04BB2DB5.ENGINE - checkpointClose start
+INFO HSQLDB Server @1f14ceb hsqldb.db.HSQLDB3C04BB2DB5.ENGINE - checkpointClose end
+INFO HSQLDB Server @1f14ceb hsqldb.db.HSQLDB3C04BB2DB5.ENGINE - Checkpoint end
+INFO HSQLDB Server @fd54d6 hsqldb.db.HSQLDB3C04BB2DB5.ENGINE - checkpointClose start
+INFO HSQLDB Server @fd54d6 hsqldb.db.HSQLDB3C04BB2DB5.ENGINE - checkpointClose end
