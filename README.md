@@ -17,9 +17,13 @@ Cron Expression虽然简单却非常容易写错，所以我们提供了对其�
 1）配置quartz支持JMX
 
 在需要管理的应用的quartz.properties中加入配置：
+```xml
 org.quartz.scheduler.jmx.export = true
+```
 
 2）配置应用容器支持JMX
 
 比如我使用的是TOMCAT，并且在Linux上，我需要往catalina.sh中加入：
+```xml
 JAVA_OPTS='-Dcom.sun.management.jmxremote=true -Dcom.sun.management.jmxremote.port=2911 -Dcom.sun.management.jmxremote.ssl=false -Dcom.sun.management.jmxremote.authenticate=false -Dorg.quartz.scheduler.jmx.export=true'
+```
