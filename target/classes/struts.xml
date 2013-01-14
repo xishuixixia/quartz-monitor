@@ -6,6 +6,9 @@
 	<constant name="struts.i18n.encoding" value="UTF-8" />
 
 	<package name="init" extends="struts-default" namespace="/">
+	   	<action name="">
+        	<result>/index.jsp</result>
+		</action>
 		<action name="init" class="com.quartz.monitor.action.InitAction">
 			<result name="success" type="redirect">/index.jsp</result>
 		</action>
