@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<constant name="struts.configuration.xml.reload" value="false"/>
+	<constant name="struts.devMode" value="true"/>
+	<constant name="struts.i18n.encoding" value="UTF-8"/>
+	
+	<package name="init" extends="struts-default" namespace="/">
+	    <action name="init" class="com.quartz.monitor.action.InitAction">  
+            <result name="success" type="redirect">/index.jsp</result>  
+        </action>
+        <action name="config" class="com.quartz.monitor.action.InitAction" method="config">  
+            <result name="success">/index.jsp</result>  
+        </action>
+        <action name="check" class="com.quartz.monitor.action.InitAction" method="check">  
+            <result name="success">/date_list.jsp</result>  
+        </action>
+	</package>
+	
+    <package name="quartz" extends="struts-default" namespace="/quartz">  
+        <action name="add" class="com.quartz.monitor.action.ConfigAction" method="add">  
+            <result name="success">/index.html</result>  
+            <result name="input">/login.jsp</result>  
+        </action> 
+        <action name="list" class="com.quartz.monitor.action.ConfigAction" method="list">  
+            <result name="list">/w_list.jsp</result>  
+        </action> 
+        <action name="show" class="com.quartz.monitor.action.ConfigAction" method="show">  
+            <result name="show">/updateInstance.jsp</result>  
+        </action>
+        <action name="update" class="com.quartz.monitor.action.ConfigAction" method="update">  
+        </action>
+        <action name="delete" class="com.quartz.monitor.action.ConfigAction" method="delete">  
+        </action>
+    </package>  
+    
+    
+      <package name="job" extends="struts-default" namespace="/job">  
+        <action name="list" class="com.quartz.monitor.action.JobAction" method="list">  
+            <result name="list">/job_list.jsp</result>  
+        </action> 
+        <action name="start" class="com.quartz.monitor.action.JobAction" method="start">  
+        </action>
+        <action name="delete" class="com.quartz.monitor.action.JobAction" method="delete">  
+        </action>
+         <action name="pause" class="com.quartz.monitor.action.JobAction" method="pause">
+        </action>
+        <action name="resume" class="com.quartz.monitor.action.JobAction" method="resume">
+        </action>
+        <action name="show" class="com.quartz.monitor.action.JobAction" method="show">
+            <result name="add">/addJob.jsp</result> 
+        </action>
+        <action name="add" class="com.quartz.monitor.action.JobAction" method="add">
+        </action>
+      </package> 
+      
+     <package name="trigger" extends="struts-default" namespace="/trigger">  
+        <action name="list" class="com.quartz.monitor.action.TriggerAction" method="list">  
+            <result name="list">/trigger_list.jsp</result>  
+        </action> 
+        <action name="delete" class="com.quartz.monitor.action.TriggerAction" method="delete">  
+        </action>
+        <action name="addShow" class="com.quartz.monitor.action.TriggerAction" method="addShow">
+             <result name="list">/addTrigger.jsp</result>    
+        </action>
+         <action name="add" class="com.quartz.monitor.action.TriggerAction" method="add">
+        </action>
+      </package> 
+      
+</struts>
