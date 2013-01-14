@@ -15,17 +15,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			<li>
 				Quartz监控管理工具
 			</li>
-			<br>
-			<li>
-			官方微博：http://weibo.com/xishuixixia
-			</li>
 		</ul>
-		<div class="subBar">
-			<ul>
-				<li></li>
-				<li></li>
-			</ul>
-		</div>
 	</div>
 	</form>
 </div>

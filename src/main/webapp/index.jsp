@@ -121,7 +121,7 @@ $(function(){
 								<ul>
 									<li><a href="quartz/list.action" target="navTab" rel="main">我的主页</a></li>
 									<li><a href="job/list.action" target="navTab" rel="page1">任务列表</a></li>
-									<li><a href="validation.html" target="navTab" rel="page1">CronExpression验证</a></li>
+									<li><a href="validation.jsp" target="navTab" rel="page2">CronExpression验证</a></li>
 								</ul>
 							</li>
 							

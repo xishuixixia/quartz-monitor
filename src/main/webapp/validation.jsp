@@ -1,4 +1,14 @@
-<h2 class="contentTitle">Cron Expression</h2>
+<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<div class="pageHeader">
+	<div class="searchBar">
+		<ul class="searchContent">
+			<li>
+				Cron Expression
+			</li>
+		</ul>
+	</div>
+	</form>
+</div>
 <div class="pageContent">
 <form action="init" name="check" method="post" class="pageForm required-validate" onsubmit="return validateCallback(this)">
 	<div class="pageFormContent" layoutH="97">
