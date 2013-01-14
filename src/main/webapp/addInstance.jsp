@@ -8,20 +8,16 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<form method="post" action="<%=request.getContextPath()%>/quartz/add.action" class="pageForm required-validate" onsubmit="return validateCallback(this,dialogAjaxDone);">
 		<div class="pageFormContent" layoutH="56">
 			<p>
-				<label>主机ip：</label>
-				<input name="host" class="required" type="text" size="30"  alt="请输入主机ip" value="127.0.0.1"/>
+				<label>主机ip：</label><input name="host" class="required" type="text" size="30"  alt="请输入主机ip" value="127.0.0.1"/>
 			</p>
 			<p>
-				<label>主机端口：</label>
-				<input type="text" class="required" name="port" alt="请输入主机端口" value="2911"/>
+				<label>主机端口：</label><input type="text" class="required" name="port" alt="请输入主机端口" value="2911"/>
 			</p>
 			<p>
-				<label>用户名：</label>
-				<input type="text" name="username"  class="textInput" alt="请输入用户名">
+				<label>用户名：</label><input type="text" name="username"  class="textInput" alt="请输入用户名">
 			</p>
 			<p>
-				<label>密码：</label>
-				<input name="password" class="digits" type="text" size="30" alt="请输入数字"/>
+				<label>密码：</label><input name="password" class="digits" type="text" size="30" alt="请输入数字"/>
 			</p>
 		</div>
 		<div class="formBar">
