@@ -30,3 +30,7 @@ JAVA_OPTS='-Dcom.sun.management.jmxremote=true -Dcom.sun.management.jmxremote.po
 3）配置Quartz-Monitor
 
 将quartz-monitor放入tomcat，配置好远程quartz的jmx信息，如jmx端口和ip，即可使用。
+
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/xishuixixia/quartz-monitor/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+
