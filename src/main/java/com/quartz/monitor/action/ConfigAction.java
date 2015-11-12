@@ -29,35 +29,46 @@ public class ConfigAction extends ActionSupport {
 	private String password;
 	
 	
-	private Map<String,QuartzConfig> quartzMap;
-	
+	private Map<String,QuartzConfig> configMap;
+	private Map<String,QuartzInstance> instanceMap;
+
 
 	public String add() throws Exception {
 
 		String id = Tools.generateUUID();
 		QuartzConfig quartzConfig = new QuartzConfig(id,host, port, username,password);
 		QuartzConnectService quartzConnectService = new QuartzConnectServiceImpl();
-		QuartzInstance quartzInstance = quartzConnectService.initInstance(quartzConfig);
-		//QuartzInstanceService.putQuartzInstance(quartzInstance);
-		QuartzInstanceContainer.addQuartzConfig(quartzConfig);
-		QuartzInstanceContainer.addQuartzInstance(id, quartzInstance);
-		log.info("add a quartz info!");
-		
-		
-		XstreamUtil.object2XML(quartzConfig);
-		
-		Result result = new Result();
-		result.setNavTabId("main");
-		result.setMessage("添加成功");
-		JsonUtil.toJson(new Gson().toJson(result));
+		try {
+			QuartzInstance quartzInstance = quartzConnectService.initInstance(quartzConfig);
+			//QuartzInstanceService.putQuartzInstance(quartzInstance);
+			QuartzInstanceContainer.addQuartzConfig(quartzConfig);
+			QuartzInstanceContainer.addQuartzInstance(id, quartzInstance);
+			log.info("add a quartz info!");
+
+
+			XstreamUtil.object2XML(quartzConfig);
+
+			Result result = new Result();
+			result.setNavTabId("main");
+			result.setMessage("添加成功");
+			JsonUtil.toJson(new Gson().toJson(result));
+		} catch (Exception e) {
+			Result result = new Result();
+			result.setNavTabId("main");
+			result.setMessage("添加失败:" + e.getMessage());
+			JsonUtil.toJson(new Gson().toJson(result));
+		}
 		return null;
 	}
 	
 	public String list() throws Exception {
 
-		quartzMap = QuartzInstanceContainer.getConfigMap();
-		log.info("get quartz map info.map size:"+quartzMap.size());
-		
+		configMap = QuartzInstanceContainer.getConfigMap();
+		instanceMap = QuartzInstanceContainer.getQuartzInstanceMap();
+
+		log.info("get config map info.map size:"+configMap.size());
+		log.info("get instance map info.map size:" + instanceMap.size());
+
 		return "list";
 	}
 
@@ -78,16 +89,23 @@ public class ConfigAction extends ActionSupport {
 
 		QuartzConfig quartzConfig = new QuartzConfig(uuid,host, port, username,password);
 		QuartzConnectService quartzConnectService = new QuartzConnectServiceImpl();
-		QuartzInstance quartzInstance = quartzConnectService.initInstance(quartzConfig);
-		QuartzInstanceContainer.addQuartzConfig(quartzConfig);
-		QuartzInstanceContainer.addQuartzInstance(uuid, quartzInstance);
-		log.info("update a quartz info!");
-		
-		XstreamUtil.object2XML(quartzConfig);
-		
-		Result result = new Result();
-		result.setMessage("修改成功");
-		JsonUtil.toJson(new Gson().toJson(result));
+		try {
+			QuartzInstance quartzInstance = quartzConnectService.initInstance(quartzConfig);
+			QuartzInstanceContainer.addQuartzConfig(quartzConfig);
+			QuartzInstanceContainer.addQuartzInstance(uuid, quartzInstance);
+			log.info("update a quartz info!");
+
+			XstreamUtil.object2XML(quartzConfig);
+
+			Result result = new Result();
+			result.setMessage("修改成功");
+			JsonUtil.toJson(new Gson().toJson(result));
+		} catch (Exception e) {
+			Result result = new Result();
+			result.setNavTabId("main");
+			result.setMessage("修改失败:" + e.getMessage());
+			JsonUtil.toJson(new Gson().toJson(result));
+		}
 		return null;
 	}
 	
@@ -137,12 +155,23 @@ public class ConfigAction extends ActionSupport {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	public Map<String, QuartzConfig> getQuartzMap() {
-		return quartzMap;
+
+	public Map<String, QuartzConfig> getConfigMap() {
+		return configMap;
 	}
-	public void setQuartzMap(Map<String, QuartzConfig> quartzMap) {
-		this.quartzMap = quartzMap;
+
+	public void setConfigMap(Map<String, QuartzConfig> configMap) {
+		this.configMap = configMap;
 	}
+
+	public Map<String, QuartzInstance> getInstanceMap() {
+		return instanceMap;
+	}
+
+	public void setInstanceMap(Map<String, QuartzInstance> instanceMap) {
+		this.instanceMap = instanceMap;
+	}
+
 	public String getUuid() {
 		return uuid;
 	}

@@ -10,6 +10,9 @@ import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import com.quartz.monitor.core.QuartzConnectService;
+import com.quartz.monitor.core.QuartzConnectServiceImpl;
+import com.quartz.monitor.object.QuzrtzInstanceStatus;
 import org.apache.struts2.ServletActionContext;
 import org.quartz.CronExpression;
 
@@ -49,6 +52,31 @@ public class InitAction  extends ActionSupport {
 		session.setAttribute("configId", key);
 		return super.execute();
 	}
+
+	public String reconnect() throws Exception {
+		QuartzInstanceContainer.removeQuartzInstance(uuid);
+		QuartzConnectService quartzConnectService = new QuartzConnectServiceImpl();
+		QuartzConfig config = QuartzInstanceContainer.getQuartzConfig(uuid);
+		try {
+			QuartzInstance quartzInstance = quartzConnectService.initInstance(config);
+			QuartzInstanceContainer.addQuartzInstance(uuid, quartzInstance);
+			Result result = new Result();
+			if (QuzrtzInstanceStatus.OK == quartzInstance.getStatus()) {
+				result.setMessage("连接成功");
+			} else {
+				result.setMessage("连接失败");
+			}
+			result.setCallbackType("");
+			JsonUtil.toJson(new Gson().toJson(result));
+		} catch (Exception e) {
+			Result result = new Result();
+			result.setMessage("连接失败:" + e.getMessage());
+			result.setCallbackType("");
+			JsonUtil.toJson(new Gson().toJson(result));
+		}
+		return null;
+	}
+
 	public String config() throws Exception {
 		
 		QuartzConfig config = QuartzInstanceContainer.getQuartzConfig(uuid);

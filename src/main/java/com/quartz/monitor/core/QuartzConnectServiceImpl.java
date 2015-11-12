@@ -12,6 +12,7 @@ import javax.management.remote.JMXConnector;
 import javax.management.remote.JMXConnectorFactory;
 import javax.management.remote.JMXServiceURL;
 
+import com.quartz.monitor.object.QuzrtzInstanceStatus;
 import org.apache.log4j.Logger;
 
 import com.quartz.monitor.conf.QuartzConfig;
@@ -34,7 +35,14 @@ public class QuartzConnectServiceImpl implements QuartzConnectService
       Map<String, String[]> env = new HashMap<String, String[]>();
       env.put(JMXConnector.CREDENTIALS, new String[]{config.getUserName(), config.getPassword()});
       JMXServiceURL jmxServiceURL = JMXUtil.createQuartzInstanceConnection(config);
-      JMXConnector connector = JMXConnectorFactory.connect(jmxServiceURL, env);
+      JMXConnector connector = null;
+      try {
+         connector = JMXConnectorFactory.connect(jmxServiceURL, env);
+      } catch (Exception e) {
+         QuartzInstance quartzInstance = new QuartzInstance();
+         quartzInstance.setStatus(QuzrtzInstanceStatus.Fail);
+         return quartzInstance;
+      }
       MBeanServerConnection connection = connector.getMBeanServerConnection();
 
       ObjectName mBName = new ObjectName("quartz:type=QuartzScheduler,*");
@@ -58,6 +66,7 @@ public class QuartzConnectServiceImpl implements QuartzConnectService
         //QuartzInstance.putListener(listener);
       }
       quartzInstance.setSchedulerList(schList);
+      quartzInstance.setStatus(QuzrtzInstanceStatus.OK);
       return quartzInstance;
    }
 }

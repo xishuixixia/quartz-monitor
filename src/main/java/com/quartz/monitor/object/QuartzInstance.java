@@ -13,6 +13,7 @@ public class QuartzInstance
    private MBeanServerConnection mBeanServerConnection;
    private QuartzJMXAdapter jmxAdapter;
    private List<Scheduler> schedulerList;
+   private QuzrtzInstanceStatus status;
 
    /**
     * needed for shutdown. *
@@ -82,7 +83,15 @@ public class QuartzInstance
 	  this.uuid = uuid;
    }
 
-  @Override
+   public QuzrtzInstanceStatus getStatus() {
+      return status;
+   }
+
+   public void setStatus(QuzrtzInstanceStatus status) {
+      this.status = status;
+   }
+
+   @Override
    public String toString()
    {
       final StringBuilder sb = new StringBuilder();
@@ -90,6 +99,7 @@ public class QuartzInstance
       sb.append("{mBeanServerConnection=").append(mBeanServerConnection);
       sb.append(", jmxAdapter=").append(jmxAdapter);
       sb.append(", schedulerList=").append(schedulerList);
+      sb.append(", status=").append(status);
       sb.append('}');
       return sb.toString();
    }

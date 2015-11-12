@@ -119,8 +119,11 @@ $(function(){
 						<ul class="tree treeFolder">
 							<li><a href="javascript:void(0)">主框架面板</a>
 								<ul>
-									<li><a href="quartz/list.action" target="navTab" rel="main">我的主页</a></li>
+									<li><a href="quartz/list.action" target="navTab" rel="main">配置列表</a></li>
 									<li><a href="job/list.action" target="navTab" rel="page1">任务列表</a></li>
+									<!--
+									<li><a href="job/list-all.action" target="navTab" rel="page1">任务列表</a></li>
+									-->
 									<li><a href="validation.jsp" target="navTab" rel="page2">CronExpression验证</a></li>
 								</ul>
 							</li>
