@@ -41,16 +41,12 @@ public class XstreamUtil {
 		return config;
 	}
 	
-	public static QuartzConfig  removeXml(String uuid) throws FileNotFoundException{
+	public static boolean removeXml(String uuid) {
 		
 		String path = Thread.currentThread().getContextClassLoader().getResource("").getPath()+"quartz-config/";
 		path = path +"quartz-config-" + uuid +".xml";
-		File file = new File(path+uuid);
+		File file = new File(path);
 		log.info("remove xml file : "+ path);
-		file.delete();
-		
-		QuartzConfig config = new QuartzConfig();
-		config = (QuartzConfig) xs.fromXML(new FileReader(path));
-		return config;
+		return file.delete();
 	}
 }

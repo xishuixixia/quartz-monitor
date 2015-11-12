@@ -92,14 +92,15 @@ public class ConfigAction extends ActionSupport {
 	}
 	
 	public String delete() throws Exception {
-
-		QuartzInstanceContainer.removeQuartzConfig(uuid);
-		QuartzInstanceContainer.removeQuartzInstance(uuid);
-		log.info("delete a quartz info!");
-		XstreamUtil.removeXml(uuid);
-		
 		Result result = new Result();
-		result.setMessage("删除成功");
+		log.info("delete a quartz info!");
+		if(XstreamUtil.removeXml(uuid)){
+			QuartzInstanceContainer.removeQuartzConfig(uuid);
+			QuartzInstanceContainer.removeQuartzInstance(uuid);
+			result.setMessage("删除成功");
+		}else{
+			result.setMessage("删除失败");
+		}
 		JsonUtil.toJson(new Gson().toJson(result));
 		return null;
 	}
