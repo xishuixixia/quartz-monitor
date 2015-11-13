@@ -1,10 +1,12 @@
 package com.quartz.monitor.core;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.*;
 
 import javax.management.MBeanServerConnection;
 import javax.management.ObjectName;
@@ -34,7 +36,8 @@ public class QuartzConnectServiceImpl implements QuartzConnectService
       Map<String, String[]> env = new HashMap<String, String[]>();
       env.put(JMXConnector.CREDENTIALS, new String[]{config.getUserName(), config.getPassword()});
       JMXServiceURL jmxServiceURL = JMXUtil.createQuartzInstanceConnection(config);
-      JMXConnector connector = JMXConnectorFactory.connect(jmxServiceURL, env);
+      //JMXConnector connector = JMXConnectorFactory.connect(jmxServiceURL, env);
+      JMXConnector connector = connectWithTimeout(jmxServiceURL, env, 5);
       MBeanServerConnection connection = connector.getMBeanServerConnection();
 
       ObjectName mBName = new ObjectName("quartz:type=QuartzScheduler,*");
@@ -59,5 +62,33 @@ public class QuartzConnectServiceImpl implements QuartzConnectService
       }
       quartzInstance.setSchedulerList(schList);
       return quartzInstance;
+   }
+
+
+   JMXConnector connectWithTimeout(final JMXServiceURL jmxServiceURL,
+                                   final Map<String,?> environment,
+                                   int timeoutSecond)
+           throws InterruptedException, ExecutionException, TimeoutException {
+      ExecutorService executor = Executors.newSingleThreadExecutor(new DaemonThreadFactory());
+      Future<JMXConnector> future = executor.submit(new Callable<JMXConnector>() {
+         public JMXConnector call() throws IOException {
+            return JMXConnectorFactory.connect(jmxServiceURL,environment);
+         }
+      });
+      JMXConnector connector = future.get(timeoutSecond, TimeUnit.SECONDS);
+      executor.shutdownNow();
+      return connector;
+   }
+
+
+   class DaemonThreadFactory implements ThreadFactory {
+      DaemonThreadFactory() {
+      }
+
+      public Thread newThread(Runnable r) {
+         Thread daemonThread = new Thread(r);
+         daemonThread.setDaemon(true);
+         return daemonThread;
+      }
    }
 }
