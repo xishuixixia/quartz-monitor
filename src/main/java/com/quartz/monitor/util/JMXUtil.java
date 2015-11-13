@@ -7,6 +7,7 @@ import javax.management.MBeanServerConnection;
 import javax.management.openmbean.CompositeDataSupport;
 import javax.management.remote.JMXServiceURL;
 
+import com.quartz.monitor.object.QuzrtzInstanceStatus;
 import org.apache.commons.lang.StringUtils;
 
 import com.quartz.monitor.conf.QuartzConfig;
@@ -31,14 +32,28 @@ public class JMXUtil {
 	public static Object callJMXAttribute(JMXInput jmxInput) throws Exception {
 		QuartzInstance quartzInstance = jmxInput.getQuartzInstanceConnection();
 		MBeanServerConnection connection = quartzInstance.getMBeanServerConnection();
-		return (Object) connection.getAttribute(jmxInput.getObjectName(), jmxInput.getOperation());
+		try {
+			Object object = connection.getAttribute(jmxInput.getObjectName(), jmxInput.getOperation());
+			jmxInput.getQuartzInstanceConnection().setStatus(QuzrtzInstanceStatus.OK);
+			return object;
+		} catch (Exception e){
+			jmxInput.getQuartzInstanceConnection().setStatus(QuzrtzInstanceStatus.Fail);
+			return null;
+		}
 	}
 
 	public static Object callJMXOperation(JMXInput jmxInput) throws Exception {
 		QuartzInstance quartzInstance = jmxInput.getQuartzInstanceConnection();
 		MBeanServerConnection connection = quartzInstance.getMBeanServerConnection();
-		return connection.invoke(jmxInput.getObjectName(), jmxInput.getOperation(),
-				jmxInput.getParameters(), jmxInput.getSignature());
+		try{
+            Object object = connection.invoke(jmxInput.getObjectName(), jmxInput.getOperation(),
+                    jmxInput.getParameters(), jmxInput.getSignature());
+            jmxInput.getQuartzInstanceConnection().setStatus(QuzrtzInstanceStatus.OK);
+            return object;
+        } catch (Exception e) {
+			jmxInput.getQuartzInstanceConnection().setStatus(QuzrtzInstanceStatus.Fail);
+			return null;
+		}
 	}
 
 	public static Object convertToType(CompositeDataSupport compositeDataSupport, String key) {

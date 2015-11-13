@@ -31,6 +31,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			<li class="line">line</li>
 			<li><a class="icon" href="demo/common/dwz-team.xls" target="dwzExport" targetType="navTab" title="实要导出这些记录吗?"><span>导出EXCEL</span></a></li>
 			<li><a class="icon" href="javascript:$.printBox('w_list_print')"><span>打印</span></a></li>
+			<li class="line">line</li>
+			<li><a class="icon" target="navTab" href="<%=request.getContextPath()%>/quartz/list.action" title="配置列表" rel="main"><span>刷新</span></a></li>
 		</ul>
 	</div>
 
@@ -38,30 +40,33 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<table class="list" width="98%" targetType="navTab" asc="asc" desc="desc" layoutH="116">
 		<thead>
 			<tr>
-				<th width="100" orderField="num" class="desc" align="middle">Scheduler名称</th>
+				<th width="100" orderField="num" class="desc" align="middle">配置名称</th>
 				<th width="100" align="middle">主机名</th>
 				<th width="100" align="middle">端口</th>
 				<th width="100" align="middle">用户名</th>
 				<th width="100" align="middle">密码</th>
+				<th width="100" align="middle">状态</th>
 				<th width="100" align="middle">操作</th>
 			</tr>
 		</thead>
 		<tbody>
-		<s:iterator value="quartzMap" id="map">
+		<s:iterator value="configMap" id="map">
 			<tr target="sid_user" rel="<s:property value="value.uuid"/>">
 				<td align="middle"><s:property value="value.name"/></td>
 				<td align="middle"><s:property value="value.host"/></td>
 				<td align="middle"><s:property value="value.port"/></td>
 				<td align="middle"><s:property value="value.username"/></td>
 				<td align="middle"><s:property value="value.password"/></td>
+				<td align="middle"><s:property value="instanceMap.get(value.uuid).status"/></td>
 				<td align="middle">
-				<s:if test="#session.configId == value.uuid">
-				当前配置
-				</s:if>
-				<s:else>
-				<a class="delete" href="<%=request.getContextPath()%>/init/config?uuid=${value.uuid}"  target="ajaxTodo" fresh="true">设为默认
-				</a>
-				</s:else>
+				<a class="delete" href="<%=request.getContextPath()%>/init/reconnect?uuid=${value.uuid}" target="ajaxTodo" fresh="true">重新连接</a>
+                <s:if test="#session.configId == value.uuid">
+                    当前配置
+                </s:if>
+                <s:else>
+                    <a class="delete" href="<%=request.getContextPath()%>/init/config?uuid=${value.uuid}"  target="ajaxTodo" fresh="true">设为默认
+                    </a>
+                </s:else>
 				</td>
 			</tr>
 			</s:iterator>

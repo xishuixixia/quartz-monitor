@@ -29,6 +29,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			<li class="line">line</li>
 			<!--<li><a class="icon" href="demo/common/dwz-team.xls" target="dwzExport" targetType="navTab" title="实要导出这些记录吗?"><span>导出EXCEL</span></a></li>-->
 			<li><a class="icon" href="javascript:$.printBox('w_list_print')"><span>打印</span></a></li>
+			<li class="line">line</li>
+			<li><a class="icon"  href="<%=request.getContextPath()%>/job/list.action" target="navTab" title="任务列表" rel="page1"><span>刷新</span></a></li>
 		</ul>
 	</div>
 

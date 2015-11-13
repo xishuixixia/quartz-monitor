@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import com.quartz.monitor.core.QuartzInstanceContainer;
 import org.apache.log4j.Logger;
 
 import com.google.gson.Gson;
@@ -35,9 +36,47 @@ public class JobAction extends ActionSupport {
 	private Integer numPerPage = 20;//每页的数量
 	private Integer pageCount;//总页数
 	private Integer size;
-	
-	public String list() throws Exception {
 
+	public String listAll() throws Exception {
+		Map<String, QuartzInstance> quartzInstanceMap = QuartzInstanceContainer.getQuartzInstanceMap();
+		if(quartzInstanceMap.size() == 0){
+			Result result = new Result();
+			result.setMessage("请先配置Quartz");
+			result.setCallbackType("");
+			JsonUtil.toJson(new Gson().toJson(result));
+			return null;
+		}
+		for(QuartzInstance instance : quartzInstanceMap.values()) {
+			List<Scheduler> schedulers = instance.getSchedulerList();
+			if (schedulers != null && schedulers.size() > 0) {
+				for (int i = 0; i < schedulers.size(); i++) {
+					Scheduler scheduler = schedulers.get(i);
+					List<Job> temp = instance.getJmxAdapter().getJobDetails(instance, scheduler);
+					if(temp != null) {
+						for (Job job : temp) {
+							String id = Tools.generateUUID();
+							job.setUuid(id);
+							JobContainer.addJob(id, job);
+							jobList.add(job);
+						}
+					}
+				}
+			}
+		}
+
+		pageCount = Tools.getPageSize(jobList.size(), numPerPage);
+		if (pageNum < 1) {
+			pageNum = 1;
+		}
+		if (pageNum > pageCount) {
+			pageNum = pageCount;
+		}
+		log.info("job size:" + jobList.size());
+		size = jobList.size();
+		return "list";
+	}
+
+	public String list() throws Exception {
 		QuartzInstance instance = Tools.getQuartzInstance();
 		if(instance == null){
 			new InitAction().execute();
@@ -52,9 +91,9 @@ public class JobAction extends ActionSupport {
 			return null;
 		}
 		List<Scheduler> schedulers = instance.getSchedulerList();
-		log.info(" schedulers list size:"+schedulers.size());
 		 if (schedulers != null && schedulers.size() > 0)
          {
+			 log.info(" schedulers list size:"+schedulers.size());
              for (int i = 0; i < schedulers.size(); i++)
              {
                  Scheduler scheduler = schedulers.get(i);

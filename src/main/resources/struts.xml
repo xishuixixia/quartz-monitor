@@ -12,6 +12,9 @@
 		<action name="init" class="com.quartz.monitor.action.InitAction">
 			<result name="success" type="redirect">/index.jsp</result>
 		</action>
+		<action name="reconnect" class="com.quartz.monitor.action.InitAction" method="reconnect">
+			<result name="success">/index.jsp</result>
+		</action>
 		<action name="config" class="com.quartz.monitor.action.InitAction" method="config">
 			<result name="success">/index.jsp</result>
 		</action>
@@ -40,6 +43,9 @@
 
 	<package name="job" extends="struts-default" namespace="/job">
 		<action name="list" class="com.quartz.monitor.action.JobAction"	method="list">
+			<result name="list">/job_list.jsp</result>
+		</action>
+		<action name="list-all" class="com.quartz.monitor.action.JobAction"	method="listAll">
 			<result name="list">/job_list.jsp</result>
 		</action>
 		<action name="start" class="com.quartz.monitor.action.JobAction" method="start">
