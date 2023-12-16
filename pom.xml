@@ -146,7 +146,7 @@
 	<pluginRepositories>
 		<pluginRepository>
 			<id>Codehaus</id>
-			<url>http://repository.codehaus.org/</url>
+			<url>https://repository.codehaus.org/</url>
 			<snapshots>
 				<enabled>false</enabled>
 			</snapshots>
